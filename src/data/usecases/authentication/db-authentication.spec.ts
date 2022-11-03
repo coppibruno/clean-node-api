@@ -67,13 +67,13 @@ describe('DbAuthentication Usecase', () => {
     const { sut, hashComparerStub } = makeSut()
 
     const compareSpy = jest.spyOn(hashComparerStub, 'compare')
-    const accessToken = await sut.auth(makeFakeAuthentication())
+    await sut.auth(makeFakeAuthentication())
     expect(compareSpy).toHaveBeenLastCalledWith('any_password', 'hashed_password')
   })
   test('Should throw if HasComparer throws', async () => {
     const { sut, hashComparerStub } = makeSut()
 
-    const compareSpy = jest.spyOn(hashComparerStub, 'compare').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(hashComparerStub, 'compare').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const promise = sut.auth(makeFakeAuthentication())
     await expect(promise).rejects.toThrow()
   })
@@ -81,7 +81,7 @@ describe('DbAuthentication Usecase', () => {
   test('Should return null if HashComparer returns false', async () => {
     const { sut, hashComparerStub } = makeSut()
 
-    const compareSpy = jest.spyOn(hashComparerStub, 'compare').mockReturnValueOnce(new Promise(resolve => resolve(false)))
+    jest.spyOn(hashComparerStub, 'compare').mockReturnValueOnce(new Promise(resolve => resolve(false)))
     const accessToken = await sut.auth(makeFakeAuthentication())
     expect(accessToken).toBe(null)
   })
