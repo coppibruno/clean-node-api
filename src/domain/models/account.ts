@@ -3,5 +3,5 @@ export interface AccountModel {
   name: string
   email: string
   password: string
-  accessToken: string
+  accessToken?: string
 }
