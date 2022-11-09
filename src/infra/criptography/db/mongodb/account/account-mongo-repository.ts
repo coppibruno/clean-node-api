@@ -31,7 +31,7 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     },
     {
       $set: {
-        accessToken: 'any_token'
+        accessToken: token
       }
     })
   }
