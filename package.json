@@ -14,7 +14,7 @@
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc"
   },
-  "author": "",
+  "author": "Bruno Coppi",
   "license": "ISC",
   "devDependencies": {
     "@shelf/jest-mongodb": "^4.1.0",
@@ -54,5 +54,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.10.0",
     "validator": "^13.7.0"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
