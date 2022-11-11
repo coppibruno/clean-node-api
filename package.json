@@ -10,7 +10,8 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
-    "dev": "sucrase-node src/main/server.ts",
+    "up": "npm run build && docker-compose up -d",
+    "down": "docker-compose down",
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc"
   },
@@ -37,7 +38,6 @@
     "jest": "^28.1.3",
     "lint-staged": "^13.0.3",
     "rimraf": "^3.0.2",
-    "sucrase": "^3.28.0",
     "supertest": "^6.3.0",
     "ts-jest": "^28.0.8",
     "typescript": "^4.7.4"
