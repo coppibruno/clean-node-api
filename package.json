@@ -10,11 +10,12 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
-    "up": "npm run build && docker-compose up -d",
+    "up": "npm run build && docker-compose up",
     "down": "docker-compose down",
     "start": "node dist/main/server.js",
-    "debug": "node --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
-    "build": "rimraf dist && tsc"
+    "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
+    "build": "rimraf dist && tsc",
+    "build:watch": "tsc -w"
   },
   "author": "Bruno Coppi",
   "license": "ISC",
@@ -54,6 +55,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.10.0",
+    "nodemon": "^2.0.20",
     "validator": "^13.7.0"
   },
   "engines": {
