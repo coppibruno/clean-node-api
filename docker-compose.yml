@@ -13,12 +13,11 @@ services:
     image: node:18
     working_dir: /usr/src/clean-node-api
     restart: always
-    command: bash -c "npm install --only=prod && npm run debug"
+    command: bash -c "npm install --only=prod && npm start"
     volumes:
       - ./dist/:/usr/src/clean-node-api/dist/
       - ./package.json:/usr/src/clean-node-api/package.json
     ports: 
       - "5050:5050"
-      - "9222:9222"
     links:
       - mongo
