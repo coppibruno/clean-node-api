@@ -20,3 +20,7 @@ export const ok = (data: any): HttpResponse => ({
 export const forbidden = (error: Error): HttpResponse => ({
   body: error, statusCode: 403
 })
+
+export const noContent = (): HttpResponse => ({
+  body: null, statusCode: 204
+})
