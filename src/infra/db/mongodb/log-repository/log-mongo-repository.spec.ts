@@ -1,10 +1,10 @@
 import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
-// import { LogMongoRepository } from './log-mongo-repository'
+import { LogMongoRepository } from './log-mongo-repository'
 
-// const makeSut = (): LogMongoRepository => {
-//   return new LogMongoRepository()
-// }
+const makeSut = (): LogMongoRepository => {
+  return new LogMongoRepository()
+}
 
 describe('Log Mongo Repository', () => {
   let errorCollection: Collection
@@ -17,14 +17,13 @@ describe('Log Mongo Repository', () => {
   })
 
   beforeEach(async () => {
-    errorCollection = await MongoHelper.getCollection('erros')
+    errorCollection = await MongoHelper.getCollection('errors')
     await errorCollection.deleteMany({})
   })
   test('Should create an error log on success', async () => {
-    // todo: Error on count mongodb tests
-    // const sut = makeSut()
-    // await sut.logError('any_error')
-    // const count = await errorCollection.countDocuments()
-    // expect(count).toBe(1)
+    const sut = makeSut()
+    await sut.logError('any_error')
+    const count = await errorCollection.countDocuments()
+    expect(count).toBe(1)
   })
 })
