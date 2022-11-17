@@ -16,7 +16,8 @@
     "start": "node dist/main/server.js",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "build": "rimraf dist && tsc",
-    "build:watch": "tsc -w"
+    "build:watch": "tsc -w",
+    "prepare": "husky install"
   },
   "author": "Bruno Coppi",
   "license": "ISC",
@@ -37,7 +38,7 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "git-commit-msg-linter": "^4.1.3",
-    "husky": "^8.0.1",
+    "husky": "^8.0.2",
     "jest": "^28.1.3",
     "lint-staged": "^13.0.3",
     "rimraf": "^3.0.2",
