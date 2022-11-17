@@ -38,7 +38,7 @@ describe('Jwt Adapter', () => {
     })
   })
 
-  describe('verify()', () => {
+  describe('verify() any', () => {
     test('Should call verify with correct values', async () => {
       const sut = makeSut()
       const verifySpy = jest.spyOn(jwt, 'verify')
