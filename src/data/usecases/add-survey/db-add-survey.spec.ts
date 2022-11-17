@@ -31,7 +31,7 @@ describe('DbAddSurvey Usecase', () => {
 
     const surveyData = makeFakeSurveyData()
     await sut.add(surveyData)
-    expect(addSpy).toBeFalsy()
+    expect(addSpy).toHaveBeenCalledWith(surveyData)
   })
   test('Should throw if AddSurveyRepository throws', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut()
