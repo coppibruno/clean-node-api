@@ -19,7 +19,7 @@
     "build:watch": "tsc -w",
     "prepare": "husky install"
   },
-  "author": "Bruno Coppi",
+  "author": "Bruno Coppi da Silva",
   "license": "ISC",
   "devDependencies": {
     "@shelf/jest-mongodb": "^4.1.0",
