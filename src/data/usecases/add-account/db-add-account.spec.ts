@@ -28,7 +28,7 @@ const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   return new LoadAccountByEmailRepositoryStub()
 }
 
-interface SutTypes {
+type SutTypes = {
   sut: DbAddAccount
   HasherStub: Hasher
   addAccountRepositoryStub: AddAccountRepository
