@@ -23,17 +23,29 @@ const makeFakeSurveys = (): SurveyModel[] => {
   ]
 }
 
+interface SutTypes {
+  sut: DbLoadSurveys
+  loadSurveysRepositoryStub: LoadSurveysRepository
+}
+
+const makeSut = (): SutTypes => {
+  class LoadSurveysRepositoryStub implements LoadSurveysRepository {
+    async loadAdd (): Promise<SurveyModel[]> {
+      return new Promise(resolve => resolve(makeFakeSurveys()))
+    }
+  }
+  const loadSurveysRepositoryStub = new LoadSurveysRepositoryStub()
+
+  const sut = new DbLoadSurveys(loadSurveysRepositoryStub)
+  return { sut, loadSurveysRepositoryStub }
+}
+
 describe('DbLoadSurveys Usecase', () => {
   test('Should call LoadSurveysRepository', async () => {
-    class LoadSurveysRepositoryStub implements LoadSurveysRepository {
-      async loadAdd (): Promise<SurveyModel[]> {
-        return new Promise(resolve => resolve(makeFakeSurveys()))
-      }
-    }
-    const loadSurveysRepositoryStub = new LoadSurveysRepositoryStub()
+    const { sut, loadSurveysRepositoryStub } = makeSut()
+
     const loadAllSpy = jest.spyOn(loadSurveysRepositoryStub, 'loadAdd')
 
-    const sut = new DbLoadSurveys(loadSurveysRepositoryStub)
     await sut.loadAdd()
     expect(loadAllSpy).toHaveBeenCalled()
   })
