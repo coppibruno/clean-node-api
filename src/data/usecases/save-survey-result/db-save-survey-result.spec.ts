@@ -5,7 +5,7 @@ import { SaveSurveyResultModel, SaveSurveyResultRepository, SurveyResultModel } 
 const makeFakeSurveyResultData = (): SaveSurveyResultModel => ({
   accountId: 'any_account_id',
   surveyId: 'any_suvery_id',
-  answers: 'any_answer',
+  answer: 'any_answer',
   date: new Date()
 })
 
