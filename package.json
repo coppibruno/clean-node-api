@@ -17,7 +17,8 @@
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "build:watch": "tsc -w",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev-jest": "jest"
   },
   "author": "Bruno Coppi da Silva",
   "license": "ISC",
