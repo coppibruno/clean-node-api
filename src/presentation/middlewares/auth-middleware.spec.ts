@@ -18,7 +18,7 @@ type SutTypes = {
 const makeSut = (role?: string): SutTypes => {
   class LoadAccountByTokenStub implements LoadAccountByToken {
     async load (accessToken: string, role?: string): Promise<AccountModel> {
-      return new Promise(resolve => resolve(mockAccountModel()))
+      return Promise.resolve(mockAccountModel())
     }
   }
   const loadAccountByTokenStub = new LoadAccountByTokenStub()
@@ -44,7 +44,7 @@ describe('Auth Middleware', () => {
 
   test('Should return 403 if LoadAccountByTokenStub returns null', async () => {
     const { sut, loadAccountByTokenStub } = makeSut()
-    jest.spyOn(loadAccountByTokenStub, 'load').mockReturnValueOnce(new Promise(resolve => resolve(null)))
+    jest.spyOn(loadAccountByTokenStub, 'load').mockReturnValueOnce(Promise.resolve(null))
     const request = makeFakeRequest()
     const httpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
@@ -60,7 +60,7 @@ describe('Auth Middleware', () => {
 
   test('Should return 500 if LoadAccountByToken throws', async () => {
     const { sut, loadAccountByTokenStub } = makeSut()
-    jest.spyOn(loadAccountByTokenStub, 'load').mockReturnValueOnce(new Promise((resolve,reject) => reject(new Error())))
+    jest.spyOn(loadAccountByTokenStub, 'load').mockReturnValueOnce(Promise.reject(new Error()))
 
     const request = makeFakeRequest()
 
