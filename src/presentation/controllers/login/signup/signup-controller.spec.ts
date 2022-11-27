@@ -1,7 +1,10 @@
 import { EmailInUseError, MissingParamError, ServerError } from '../../../errors'
-import { AddAccountModelParams, AddAccount, AccountModel, HttpRequest, Validation, Authentication, AuthenticationModelParams } from './signup-controller-protocols'
+import { AddAccount, HttpRequest, Validation, Authentication } from './signup-controller-protocols'
 import { SignUpController } from './signup-controller'
 import { ok, serverError, badRequest, forbidden } from '../../../helpers/http/http-helper'
+import { throwError } from '@/domain/test'
+import { mockValidation } from '@/validation/test'
+import { mockAddAccount, mockAuthentication } from '@/presentation/test'
 
 type SutTypes = {
   sut: SignUpController
@@ -10,46 +13,10 @@ type SutTypes = {
   authenticationStub: Authentication
 }
 
-const makeAddAccount = (): AddAccount => {
-  class AddAccountStub implements AddAccount {
-    async add (account: AddAccountModelParams): Promise<AccountModel> {
-      return new Promise(resolve => resolve(makeFakeAccount()))
-    }
-  }
-
-  return new AddAccountStub()
-}
-
-const makeValidation = (): Validation => {
-  class ValidationStub implements Validation {
-    validate (input: any): Error {
-      return null
-    }
-  }
-
-  return new ValidationStub()
-}
-
-const makeAuthentication = (): Authentication => {
-  class AuthenticationStub implements Authentication {
-    async auth (authenticationModel: AuthenticationModelParams): Promise<string> {
-      return new Promise(resolve => resolve('any_token'))
-    }
-  }
-  return new AuthenticationStub()
-}
-
-const makeFakeAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@mail.com',
-  password: 'valid_password'
-})
-
 const makeSut = (): SutTypes => {
-  const addAccountStub = makeAddAccount()
-  const validationStub = makeValidation()
-  const authenticationStub = makeAuthentication()
+  const addAccountStub = mockAddAccount()
+  const validationStub = mockValidation()
+  const authenticationStub = mockAuthentication()
   const sut = new SignUpController(addAccountStub, validationStub, authenticationStub)
   return {
     sut,
@@ -128,7 +95,7 @@ describe('SignUp Controller', () => {
   })
   test('Should return 500 if Authentication throws ', async () => {
     const { sut, authenticationStub } = makeSut()
-    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(throwError)
     const httpRequest = makeFakeRequest()
 
     const httpResponse = await sut.handle(httpRequest)

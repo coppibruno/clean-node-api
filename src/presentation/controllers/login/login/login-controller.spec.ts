@@ -1,27 +1,12 @@
 import { MissingParamError } from '../../../errors'
 import { serverError, badRequest, unauthorized, ok } from '../../../helpers/http/http-helper'
-import { HttpRequest, Authentication, AuthenticationModelParams } from './login-controller-protocols'
+import { HttpRequest, Authentication } from './login-controller-protocols'
 import { LoginController } from './login-controller'
 import { Validation } from '../signup/signup-controller-protocols'
+import { throwError } from '@/domain/test'
+import { mockAuthentication } from '@/presentation/test'
+import { mockValidation } from '@/validation/test'
 
-const makeValidation = (): Validation => {
-  class ValidationStub implements Validation {
-    validate (input: any): Error {
-      return null
-    }
-  }
-
-  return new ValidationStub()
-}
-
-const makeAuthentication = (): Authentication => {
-  class AuthenticationStub implements Authentication {
-    async auth (authenticationModel: AuthenticationModelParams): Promise<string> {
-      return new Promise(resolve => resolve('any_token'))
-    }
-  }
-  return new AuthenticationStub()
-}
 type SutTypes = {
   sut: LoginController
   authenticationStub: Authentication
@@ -29,8 +14,8 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const authenticationStub = makeAuthentication()
-  const validationStub = makeValidation()
+  const authenticationStub = mockAuthentication()
+  const validationStub = mockValidation()
   const sut = new LoginController(authenticationStub, validationStub)
   return { sut, authenticationStub, validationStub }
 }
@@ -61,7 +46,7 @@ describe('Login Controller', () => {
   })
   test('Should return 500 if Authentication throws ', async () => {
     const { sut, authenticationStub } = makeSut()
-    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(throwError)
     const httpRequest = makeFakeRequest()
 
     const httpResponse = await sut.handle(httpRequest)
