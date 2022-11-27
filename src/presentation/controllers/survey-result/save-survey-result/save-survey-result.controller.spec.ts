@@ -1,4 +1,4 @@
-import { HttpRequest, LoadSurveyById, SurveyModel, SaveSurveyResult, SaveSurveyResultModel } from './save-survey-result.controller-protocols'
+import { HttpRequest, LoadSurveyById, SurveyModel, SaveSurveyResult, SaveSurveyResultModelParams } from './save-survey-result.controller-protocols'
 import MockDate from 'mockdate'
 import { SaveSurveyResultController } from './save-survey-result.controller'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
@@ -35,7 +35,7 @@ const makeFakeRequest = (): HttpRequest => ({
 
 const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
-    async save (data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save (data: SaveSurveyResultModelParams): Promise<SurveyResultModel> {
       return new Promise(resolve => resolve(makeFakeSaveSurveyResult()))
     }
   }

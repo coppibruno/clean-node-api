@@ -1,6 +1,6 @@
 import { MissingParamError } from '../../../errors'
 import { serverError, badRequest, unauthorized, ok } from '../../../helpers/http/http-helper'
-import { HttpRequest, Authentication, AuthenticationModel } from './login-controller-protocols'
+import { HttpRequest, Authentication, AuthenticationModelParams } from './login-controller-protocols'
 import { LoginController } from './login-controller'
 import { Validation } from '../signup/signup-controller-protocols'
 
@@ -16,7 +16,7 @@ const makeValidation = (): Validation => {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (authenticationModel: AuthenticationModel): Promise<string> {
+    async auth (authenticationModel: AuthenticationModelParams): Promise<string> {
       return new Promise(resolve => resolve('any_token'))
     }
   }
