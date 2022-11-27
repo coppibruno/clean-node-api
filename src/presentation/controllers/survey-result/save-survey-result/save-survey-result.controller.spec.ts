@@ -4,16 +4,8 @@ import { SaveSurveyResultController } from './save-survey-result.controller'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
 import { SurveyResultModel } from '@/domain/models/survey-result'
+import { throwError, mockSurveyModel } from '@/domain/test'
 
-const makeFakeSurvey = (): SurveyModel => ({
-  id: 'any_id',
-  question: 'any_question',
-  answers: [
-    { image: 'any_image', answer: 'any_answer' }
-  ],
-  date: new Date()
-}
-)
 const makeFakeSaveSurveyResult = (): SurveyResultModel => ({
   surveyId: 'any_survey_id',
   accountId: 'valid_account_id',
@@ -60,7 +52,7 @@ const makeSut = (): SutTypes => {
 const makeLoadSurveyById = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
     async loadById (id: string): Promise<SurveyModel> {
-      return new Promise(resolve => resolve(makeFakeSurvey()))
+      return new Promise(resolve => resolve(mockSurveyModel()))
     }
   }
   return new LoadSurveyByIdStub()
@@ -91,7 +83,7 @@ describe('Save Survey Result Controller', () => {
   })
   test('Should return 500 if LoadSurveyById throws', async () => {
     const { loadSurveyByIdStub, sut } = makeSut()
-    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementationOnce(throwError)
     const httpRequest = makeFakeRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error()))
@@ -123,7 +115,7 @@ describe('Save Survey Result Controller', () => {
   })
   test('Should return 500 if SaveSurveyResult throws', async () => {
     const { saveSurveyResultStub, sut } = makeSut()
-    jest.spyOn(saveSurveyResultStub, 'save').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(saveSurveyResultStub, 'save').mockImplementationOnce(throwError)
     const httpRequest = makeFakeRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error()))
