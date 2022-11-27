@@ -3,8 +3,8 @@ import MockDate from 'mockdate'
 import { SaveSurveyResultController } from './save-survey-result.controller'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
-import { throwError } from '@/domain/test'
 import { mockLoadSurveyById, mockSaveSurveyResult, mockSaveSurveyResultRepository } from '@/presentation/test'
+import { throwError } from '@/domain/test'
 
 const makeFakeRequest = (): HttpRequest => ({
   params: {
