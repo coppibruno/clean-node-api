@@ -7,7 +7,15 @@ export const mockFakeSurveyResultData = (): SaveSurveyResultModelParams => ({
   date: new Date()
 })
 
-export const mockFakeSurveyResult = (): SurveyResultModel => Object.assign({}, mockFakeSurveyResultData(), { id: 'any_id' })
+export const mockFakeSurveyResult = (): SurveyResultModel => ({
+  surveyId: 'any_survey_id',
+  question: 'any_question',
+  answers: [
+    { answer: 'any_answer', count: 1, percent: 50 },
+    { answer: 'other_answer', image: 'any_image', count: 10, percent: 80 }
+  ],
+  date: new Date()
+})
 
 export const mockSaveSurveyResultRepository = (): SaveSurveyResultRepository => {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {

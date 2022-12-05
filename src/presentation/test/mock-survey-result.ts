@@ -3,12 +3,13 @@ import { SaveSurveyResult, SaveSurveyResultModelParams } from '../controllers/su
 
 export const mockSaveSurveyResult = (): SurveyResultModel => ({
   surveyId: 'any_survey_id',
-  accountId: 'valid_account_id',
-  date: new Date(),
-  answer: 'valid_answer',
-  id: 'valid_id'
-}
-)
+  question: 'any_question',
+  answers: [
+    { answer: 'any_answer', count: 1, percent: 50 },
+    { answer: 'other_answer', image: 'any_image', count: 10, percent: 80 }
+  ],
+  date: new Date()
+})
 
 export const mockSaveSurveyResultRepository = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
