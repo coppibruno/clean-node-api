@@ -1,16 +1,27 @@
 import { mockLoadSurveyById } from '@/presentation/test'
 import { LoadSurveyResultController } from './load-survey-result.controller'
-import { HttpRequest } from './load-survey-result.controller-protocols'
+import { HttpRequest, LoadSurveyById } from './load-survey-result.controller-protocols'
 
 const makeFakeRequest = (): HttpRequest => ({
   params: {
     surveyId: 'any_id'
   }
 })
+
+type SutTypes = {
+  sut: LoadSurveyResultController
+  loadSurveyByIdStub: LoadSurveyById
+}
+
+const makeSut = (): SutTypes => {
+  const loadSurveyByIdStub = mockLoadSurveyById()
+  const sut = new LoadSurveyResultController(loadSurveyByIdStub)
+  return { sut, loadSurveyByIdStub }
+}
+
 describe('Load Survey Result Controller', () => {
   test('Should call LoadSurveyById with correct value', async () => {
-    const loadSurveyByIdStub = mockLoadSurveyById()
-    const sut = new LoadSurveyResultController(loadSurveyByIdStub)
+    const { sut, loadSurveyByIdStub } = makeSut()
     const loadByIdSpy = jest.spyOn(loadSurveyByIdStub, 'loadById')
     const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
