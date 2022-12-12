@@ -1,11 +1,11 @@
 import { LoadSurveyResultRepository } from '@/data/usecases/load-survey-result/db-load-survey-result-protocols'
-import { SaveSurveyResultModelParams, SaveSurveyResultRepository, SurveyResultModel } from '@/data/usecases/save-survey-result/db-save-survey-result-protocols'
+import { SaveSurveyResultModelParams, SaveSurveyResultRepository } from '@/data/usecases/save-survey-result/db-save-survey-result-protocols'
 import { ObjectId } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { QueryBuilder } from '../helpers/query-builder'
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
-  async save (data: SaveSurveyResultModelParams): Promise<SurveyResultModel> {
+  async save (data: SaveSurveyResultModelParams): Promise<void> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
 
     await surveyResultCollection.findOneAndUpdate({
