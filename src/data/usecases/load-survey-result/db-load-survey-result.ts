@@ -1,7 +1,7 @@
 import { LoadSurveyByIdRepository } from '../survey/load-survey-by-id/db-load-survey-by-id-protocols'
 import { LoadSurveyResultRepository, SurveyResultModel, LoadSurveyResult } from './db-load-survey-result-protocols'
 
-export class DbLoadSurveResult implements LoadSurveyResult {
+export class DbLoadSurveyResult implements LoadSurveyResult {
   constructor (
     private readonly loadSurveyResultRepository: LoadSurveyResultRepository,
     private readonly loadSurveyByIdRepository: LoadSurveyByIdRepository
